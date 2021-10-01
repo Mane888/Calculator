@@ -6,7 +6,61 @@
 
 section {
   display: flex;
+  align-items: center;
+  justify-content: space-around;
   height: 100vh;
   background-color: rgb(233, 233, 233);
   font-family: sans-serif;
+}
+
+button{
+  align-items: center;
+  justify-content: space-evenly;
+  width: 70px;
+  height: 70px;
+  margin: 5px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.815);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+button:hover{
+  background-color: rgba(219, 219, 219, 0.815);
+}
+
+.calculator {
+  width: 400px;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(99, 99, 99);
+}
+
+.screen {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 15px;
+  padding-top: 45px;
+  padding-bottom: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 23px;
+  background-color: rgba(0, 0, 0, 0.589);
+  color: rgba(255, 255, 255, 0.925);
+}
+
+.calcGrid {
+  display: grid;
+  justify-items: center;
+  border-radius: 5px;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: rgb(151, 151, 151);
+}
+
+.span-2 {
+  grid-column: span 2;
+  margin-top: 20px;
+  width: 165px;
 }
