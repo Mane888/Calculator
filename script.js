@@ -1,24 +1,46 @@
-let a = null;
-let b = null;
+let a = [];
+let b = [];
 let operator = '';
+const sumBtn = document.querySelector('#sum');
+const numButtons = document.querySelectorAll('.numBtn');
+const operatorButtons = document.querySelectorAll('.operatorBtn');
+const screen = document.querySelector('.screen');
 
-const buttons = document.querySelectorAll('.btn');
+
+numButtons.forEach((numBtn) => {
+  numBtn.addEventListener('click', () =>{
+    if(operator === ''){
+      a.push(numBtn.textContent);
+      screen.textContent = a.join('');
+    }
+    else if(operator != ''){
+      b.push(numBtn.textContent);
+      screen.textContent = `${a.join('')}${operator}${b.join('')}`
+    };
+  });
+});
 
 
-function pickA(){
-  a = document.querySelectorAll('.btnNum').textContent;
-};
+function finalA(){
+ let newA = a.splice(',');
+ screenA = newA;
+ console.log(newA);
+}
+console.log([a]);
+console.log([b]);
 
-function pickB(){
-  b = document.querySelectorAll('.btnNum').textContent;
-};
+
+sumBtn.addEventListener('click', ()=>{
+  operate(a, b);
+});
+
 
 function pickOperator(){
   operator = document.querySelectorAll('.btnNum').textContent;
 };
 
-const sumDispley = document.querySelector('.sum');
-sumDispley.textContent = `${a} ${operator} ${b}`;
+//const sumDispley = document.querySelector('.screen');
+//sumDispley.textContent = `${a} ${operator} ${b}`;
 
 const add = addNum(a, b);
 function addNum(a, b) {
@@ -46,8 +68,8 @@ function divideNum(a, b) {
 
 
 function operate(){
-  let operandOne = pickA();
-  let operandTwo = pickB();
+  let operandOne = a;
+  let operandTwo = b;
   if(operator === '+'){
     let val = addNum(operandOne, operandTwo);
     return(val);
@@ -65,5 +87,4 @@ function operate(){
     return(val);
   };
 };
-operate();
 console.log(operate());
