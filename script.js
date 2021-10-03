@@ -13,6 +13,7 @@ const clearBtn = document.querySelector('#c');
 clearBtn.addEventListener('click', () =>  {
   a = [];
   b = [];
+  operator = '';
   screen.textContent = 0;
   hideNull();
 });
