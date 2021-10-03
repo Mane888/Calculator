@@ -39,7 +39,8 @@ button:hover{
 
 .screen {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
+  align-items: flex-end;
   padding-right: 15px;
   padding-top: 45px;
   padding-bottom: 15px;
@@ -48,7 +49,11 @@ button:hover{
   border-radius: 5px;
   font-size: 23px;
   background-color: rgba(0, 0, 0, 0.589);
-  color: rgba(255, 255, 255, 0.925);
+  color: rgba(255, 255, 255, 0.493);
+}
+
+.upperNum {
+  color: rgb(255, 255, 255);
 }
 
 .calcGrid {
@@ -63,4 +68,12 @@ button:hover{
   grid-column: span 2;
   margin-top: 20px;
   width: 165px;
+}
+
+.hideNull {
+  opacity: 0;
+}
+
+.displeySum {
+  color: white;
 }
