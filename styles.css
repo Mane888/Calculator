@@ -80,3 +80,7 @@ button:hover{
 .displeySum {
   color: white;
 }
+
+.disableBtn {
+  pointer-events: none;
+}

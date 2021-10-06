@@ -7,7 +7,43 @@ const operatorButtons = document.querySelectorAll('.operatorBtn');
 const screen = document.querySelector('.upperNum');
 const screenSum = document.querySelector('.lowerNum');
 const clearBtn = document.querySelector('#c');
+const removeBtn = document.querySelector('#r');
+const commaBtn = document.querySelector('#comma');
 
+
+//prevent inputing multiple commas to the arrays A and B
+function preventMultipleCommas(){
+  if(a.includes('.'))  {
+    commaBtn.classList.add('disableBtn');
+    console.log();
+  }
+  if(operator != '') {
+    commaBtn.classList.remove('disableBtn');
+  }
+  if(b.includes('.'))  {
+    commaBtn.classList.add('disableBtn');
+  }
+};
+
+
+removeBtn.addEventListener('click', ()  =>  {
+  if((b.length === 0) && (operator = '')){
+    a.pop();
+    screen.textContent = `${a.join('')}${operator}${b.join('')}`
+    console.log(a);
+    }
+  if(b.length != 0){
+  b.pop();
+  screen.textContent = `${a.join('')}${operator}${b.join('')}`
+  console.log(b);
+  }
+  else if(b.length === 0){
+    operator = '';
+    screen.textContent = `${a.join('')}${operator}${b.join('')}`
+  }
+  
+  
+});
 
 //emptying both arrays and settion screen to default when pressing C
 clearBtn.addEventListener('click', () =>  {
@@ -18,6 +54,7 @@ clearBtn.addEventListener('click', () =>  {
   hideNull();
   document.querySelector('.upperNum').classList.remove('hideNull');
   document.querySelector('.lowerNum').classList.remove('displeySum');
+  commaBtn.classList.remove('disableBtn');
 });
 
 
@@ -50,6 +87,7 @@ numButtons.forEach((numBtn) =>  {
     if(operator === ''){
       a.push(numBtn.textContent);
       screen.textContent = a.join('');
+      preventMultipleCommas();
     }
     else if(operator != ''){
       b.push(numBtn.textContent);
@@ -57,6 +95,7 @@ numButtons.forEach((numBtn) =>  {
       hideNull();
       let sum = operate(a, b);
       screenSum.textContent = sum;
+      preventMultipleCommas();
     };
   });
 });
@@ -76,7 +115,6 @@ operatorButtons.forEach((operatorBtn) =>  {
 
 //click event listener for the sum button
 sumBtn.addEventListener('click', ()=>{
-  let sum = operate(a, b);
     a = [];
     b = [];
     operator = '';
@@ -126,8 +164,8 @@ function divideNum(a, b) {
 
 //run the math expression based on what operator is selected 
 function operate(){
-  let operandOne = parseInt(a.join(''));
-  let operandTwo = parseInt(b.join(''));
+  let operandOne = parseFloat(a.join(''));
+  let operandTwo = parseFloat(b.join(''));
   if(operator === '+'){
     let val = addNum(operandOne, operandTwo);
     return(val);
