@@ -14,8 +14,10 @@ clearBtn.addEventListener('click', () =>  {
   a = [];
   b = [];
   operator = '';
-  screen.textContent = 0;
+  screen.textContent = '0';
   hideNull();
+  document.querySelector('.upperNum').classList.remove('hideNull');
+  document.querySelector('.lowerNum').classList.remove('displeySum');
 });
 
 
@@ -31,6 +33,18 @@ function hideNull(){
 };
 
 
+//when a operator button is clicked while there is a math expression displeyed, clear everything, and than push the sum of that expression as the new A
+function changeAtoNewSum()  {
+  if(b.join('') != ''){
+    a = [];
+    b = [];
+    operator = '';
+    a.push(screenSum.textContent);
+    document.querySelector('.lowerNum').classList.remove('displeySum');
+  };
+};
+
+//click event listener for number buttons, pushing the button text content to A and if an operator is selected than the numbers are pushed to B
 numButtons.forEach((numBtn) =>  {
   numBtn.addEventListener('click', () =>{
     if(operator === ''){
@@ -47,58 +61,70 @@ numButtons.forEach((numBtn) =>  {
   });
 });
 
+
+//operator buttons on click event listener
 operatorButtons.forEach((operatorBtn) =>  {
   operatorBtn.addEventListener('click', ()  =>{
     if(screen.textContent != '0'){
-    operator = operatorBtn.textContent;
-    screen.textContent = `${a.join('')}${operator}${b.join('')}`
+      changeAtoNewSum();
+      operator = operatorBtn.textContent;
+      screen.textContent = `${a.join('')}${operator}${b.join('')}`
     };
   });
 });
 
 
-
+//click event listener for the sum button
 sumBtn.addEventListener('click', ()=>{
   let sum = operate(a, b);
-  screenSum.textContent = sum;
-  document.querySelector('.upperNum').classList.add('hideNull');
-  document.querySelector('.lowerNum').classList.add('displeySum');
-  console.log(operate());
+    a = [];
+    b = [];
+    operator = '';
+    a.push(screenSum.textContent);
+    screen.textContent = `${a.join('')}`;
+  document.querySelector('.lowerNum').classList.add('hideNull');
 });
 
 
+//picking the operator to use in the IF statement in the operate function
 function pickOperator(){
   operator = document.querySelectorAll('.btnNum').textContent;
 };
 
-//const sumDispley = document.querySelector('.screen');
-//sumDispley.textContent = `${a} ${operator} ${b}`;
 
+//adding function
 const add = addNum(a, b);
 function addNum(a, b) {
-  let val = a + b;
+  let val = (a + b);
   return(val);
 };
 
+
+//subtract function
 const subtract = subtractNum(a, b);
 function subtractNum(a, b) {
-	let val = a - b;
+	let val = (a - b);
   return(val);
 };
 
+
+//multiply function
 const multiply = multiplyNum(a, b);
 function multiplyNum(a, b) {
-	let val = a * b;
+	let val = (a * b).toFixed(1);
   return(val);
 };
 
+
+//divide function
 const divide = divideNum(a, b);
 function divideNum(a, b) {
-	let val = a / b;
+	let val = (a / b).toFixed(1);
   return(val);
 };
 
 
+//run the math expression based on what operator is selected 
 function operate(){
   let operandOne = parseInt(a.join(''));
   let operandTwo = parseInt(b.join(''));

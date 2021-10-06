@@ -49,6 +49,9 @@ button:hover{
   border-radius: 5px;
   font-size: 23px;
   background-color: rgba(0, 0, 0, 0.589);
+}
+
+.lowerNum {
   color: rgba(255, 255, 255, 0.493);
 }
 
