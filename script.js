@@ -9,41 +9,86 @@ const screenSum = document.querySelector('.lowerNum');
 const clearBtn = document.querySelector('#c');
 const removeBtn = document.querySelector('#r');
 const commaBtn = document.querySelector('#comma');
+const zeroBtn = document.querySelector('#zeroBtn');
 
+backspaceBtn();
 
 //prevent inputing multiple commas to the arrays A and B
 function preventMultipleCommas(){
   if(a.includes('.'))  {
     commaBtn.classList.add('disableBtn');
-    console.log();
   }
-  if(operator != '') {
-    commaBtn.classList.remove('disableBtn');
+  if(a.join('') === '.'){
+    a.unshift('0');
+    screen.textContent = `${a.join('')}`;
+  }
+  if(b.join('') === '.'){
+    b.unshift('0');
+    screen.textContent = `${a.join('')}${operator}${b.join('')}`;
+  }
+  if(screenSum.textContent === 'NaN'){
+    screenSum.textContent = '0';
   }
   if(b.includes('.'))  {
     commaBtn.classList.add('disableBtn');
   }
+  else{
+    commaBtn.classList.remove('disableBtn');
+  }
 };
 
 
+function preventMultipleZerosforA(){
+  if(a.length === 1 && a.includes('0')){
+    zeroBtn.classList.add('disableBtn');
+  }
+  else if(a.includes('.')){
+    zeroBtn.classList.remove('disableBtn')
+  }
+};
+
+
+function preventMultipleZerosforB(){
+  if(b.length === 1 && b.includes('0')){
+    zeroBtn.classList.add('disableBtn');
+  }
+  else if(b.includes('.')){zeroBtn.classList.remove('disableBtn');}
+}
+
+
+//remove/backspace button event listener
+function backspaceBtn(){
 removeBtn.addEventListener('click', ()  =>  {
-  if((b.length === 0) && (operator = '')){
+  
+  if(operator === ''){
     a.pop();
-    screen.textContent = `${a.join('')}${operator}${b.join('')}`
-    console.log(a);
-    }
+    screen.textContent = `${a.join('')}${operator}${b.join('')}`;
+  }
   if(b.length != 0){
   b.pop();
-  screen.textContent = `${a.join('')}${operator}${b.join('')}`
-  console.log(b);
+  screen.textContent = `${a.join('')}${operator}${b.join('')}`;
   }
-  else if(b.length === 0){
+  else if(b.length === 0 && a.length != 0){
     operator = '';
-    screen.textContent = `${a.join('')}${operator}${b.join('')}`
+    screen.textContent = `${a.join('')}${operator}${b.join('')}`;
   }
-  
-  
+  if(a.length === 0){
+    screen.textContent = '0';
+    commaBtn.classList.remove('disableBtn');
+    zeroBtn.classList.remove('disableBtn');
+    hideNull();
+  }
+  if((operator != '') && (b.length != 0)){
+  let sum = operate();
+  screenSum.textContent = sum;
+  }
+  else if ((operator != '') && (b.length === 0)){
+    screenSum.textContent = '0';
+    document.querySelector('.lowerNum').classList.add('hideNull');
+  };
 });
+};
+
 
 //emptying both arrays and settion screen to default when pressing C
 clearBtn.addEventListener('click', () =>  {
@@ -55,6 +100,7 @@ clearBtn.addEventListener('click', () =>  {
   document.querySelector('.upperNum').classList.remove('hideNull');
   document.querySelector('.lowerNum').classList.remove('displeySum');
   commaBtn.classList.remove('disableBtn');
+  zeroBtn.classList.remove('disableBtn');
 });
 
 
@@ -81,24 +127,35 @@ function changeAtoNewSum()  {
   };
 };
 
+
+numberField();
 //click event listener for number buttons, pushing the button text content to A and if an operator is selected than the numbers are pushed to B
-numButtons.forEach((numBtn) =>  {
-  numBtn.addEventListener('click', () =>{
-    if(operator === ''){
-      a.push(numBtn.textContent);
-      screen.textContent = a.join('');
-      preventMultipleCommas();
-    }
-    else if(operator != ''){
-      b.push(numBtn.textContent);
-      screen.textContent = `${a.join('')}${operator}${b.join('')}`
-      hideNull();
-      let sum = operate(a, b);
-      screenSum.textContent = sum;
-      preventMultipleCommas();
-    };
+function numberField(){
+  numButtons.forEach((numBtn) =>  {
+    numBtn.addEventListener('click', () =>{
+      if(operator === ''){
+        a.push(numBtn.textContent);
+        screen.textContent = a.join('');
+        preventMultipleCommas();
+      }
+      if(a.length === 1 && a.includes('0')){
+        a = [];
+      }
+      if(operator != ''){
+        b.push(numBtn.textContent);
+        screen.textContent = `${a.join('')}${operator}${b.join('')}`
+        hideNull();
+        let sum = operate(a, b);
+        screenSum.textContent = sum;
+        preventMultipleCommas();
+      }
+      if(b.length === 1 && b.includes('0')){
+        b = [];
+        commaBtn.classList.remove('disableBtn');
+      };
+    });
   });
-});
+};
 
 
 //operator buttons on click event listener
@@ -106,6 +163,7 @@ operatorButtons.forEach((operatorBtn) =>  {
   operatorBtn.addEventListener('click', ()  =>{
     if(screen.textContent != '0'){
       changeAtoNewSum();
+      commaBtn.classList.remove('disableBtn');
       operator = operatorBtn.textContent;
       screen.textContent = `${a.join('')}${operator}${b.join('')}`
     };
@@ -133,7 +191,7 @@ function pickOperator(){
 //adding function
 const add = addNum(a, b);
 function addNum(a, b) {
-  let val = (a + b);
+  let val = parseFloat(a + b);
   return(val);
 };
 
@@ -141,7 +199,7 @@ function addNum(a, b) {
 //subtract function
 const subtract = subtractNum(a, b);
 function subtractNum(a, b) {
-	let val = (a - b);
+	let val = parseFloat(a - b);
   return(val);
 };
 
@@ -149,7 +207,7 @@ function subtractNum(a, b) {
 //multiply function
 const multiply = multiplyNum(a, b);
 function multiplyNum(a, b) {
-	let val = (a * b).toFixed(1);
+	let val = parseFloat(a * b);
   return(val);
 };
 
@@ -157,7 +215,7 @@ function multiplyNum(a, b) {
 //divide function
 const divide = divideNum(a, b);
 function divideNum(a, b) {
-	let val = (a / b).toFixed(1);
+	let val = parseFloat(a / b);
   return(val);
 };
 
