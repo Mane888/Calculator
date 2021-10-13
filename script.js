@@ -15,6 +15,7 @@ backspaceBtn();
 
 //prevent inputing multiple commas to the arrays A and B
 function preventMultipleCommas(){
+
   if(a.includes('.'))  {
     commaBtn.classList.add('disableBtn');
   }
@@ -31,9 +32,6 @@ function preventMultipleCommas(){
   }
   if(b.includes('.'))  {
     commaBtn.classList.add('disableBtn');
-  }
-  else{
-    commaBtn.classList.remove('disableBtn');
   }
 };
 
@@ -191,7 +189,7 @@ function pickOperator(){
 //adding function
 const add = addNum(a, b);
 function addNum(a, b) {
-  let val = parseFloat(a + b);
+  let val = parseFloat(a + b).toLocaleString();
   return(val);
 };
 
@@ -199,7 +197,7 @@ function addNum(a, b) {
 //subtract function
 const subtract = subtractNum(a, b);
 function subtractNum(a, b) {
-	let val = parseFloat(a - b);
+	let val = parseFloat(a - b).toLocaleString();
   return(val);
 };
 
@@ -207,7 +205,7 @@ function subtractNum(a, b) {
 //multiply function
 const multiply = multiplyNum(a, b);
 function multiplyNum(a, b) {
-	let val = parseFloat(a * b);
+	let val = parseFloat(a * b).toLocaleString();
   return(val);
 };
 
@@ -215,7 +213,7 @@ function multiplyNum(a, b) {
 //divide function
 const divide = divideNum(a, b);
 function divideNum(a, b) {
-	let val = parseFloat(a / b);
+	let val = parseFloat(a / b).toLocaleString();
   return(val);
 };
 
